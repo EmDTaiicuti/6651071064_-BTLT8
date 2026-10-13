@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BYTE — phụ kiện công nghệ tinh gọn cho cuộc sống mỗi ngày.">
+  <title>BYTE — Phụ kiện công nghệ</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <header class="shop-header">
+      <nav class="shop-nav" aria-label="Điều hướng cửa hàng">
+        <a class="shop-brand" href="#home" aria-label="BYTE — về đầu trang">
+          <span class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M17.5 3 7 18h7l-1 11 12-17h-8z"/></svg></span>
+          <span>BYTE<small>TECH ACCESSORIES</small></span>
+        </a>
+        <div class="nav-links"><a href="#home">Trang chủ</a><a href="#products">Sản phẩm</a><a href="#offers">Khuyến mãi</a><a href="#contact">Liên hệ</a></div>
+        <a class="header-cart" href="#cart" :aria-label="'Giỏ hàng, ' + cartCount + ' sản phẩm'">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 11.1a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 1.9-1.4L22 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+          <span class="cart-label">Giỏ hàng</span><span class="cart-count">{{ cartCount }}</span>
+        </a>
+      </nav>
+    </header>
+
+    <main id="home" class="page-shell">
+      <section class="shop-hero">
+        <div>
+          <p class="eyebrow"><span></span> TECH THAT FITS YOUR DAY</p>
+          <h1>Những món nhỏ,<br><em>nâng tầm</em> mỗi ngày.</h1>
+          <p class="hero-copy">Phụ kiện được chọn kỹ để đồng hành cùng nhịp sống của bạn — thiết kế tinh gọn, dùng bền, kết nối dễ dàng.</p>
+          <a class="hero-button" href="#products">Khám phá sản phẩm <span>↘</span></a>
+        </div>
+        <div class="hero-visual" aria-label="Khu vực ảnh sản phẩm nổi bật">
+          <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+          <div class="media-frame hero-product-media"><span class="media-placeholder">Thêm ảnh sản phẩm nổi bật<br><code>images/hero-accessory.png</code></span><img src="images/hero-accessory.png" alt="Ảnh phụ kiện công nghệ nổi bật" @load="markImageLoaded($event)" @error="markImageMissing($event)"></div>
+          <span class="hero-chip">SMALL THINGS<br><strong>BIG DIFFERENCE</strong></span>
+        </div>
+      </section>
+
+      <section class="promo-strip" id="offers"><span class="promo-spark" aria-hidden="true">✳</span><p><strong>Ưu đãi hôm nay</strong> — giảm 20% cho mọi đơn ốp lưng và cáp sạc</p><a href="#products">Xem ưu đãi <span>↗</span></a></section>
+
+      <section class="catalog-layout" id="products">
+        <div class="catalog-main">
+          <div class="catalog-heading">
+            <div><p class="eyebrow"><span></span> ĐƯỢC CHỌN CHO BẠN</p><h2>Phụ kiện nổi bật</h2><p class="catalog-count">{{ danhSachLoc.length }} sản phẩm sẵn sàng đồng hành</p></div>
+            <label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><span class="visually-hidden">Tìm sản phẩm</span><input v-model.trim="tuKhoa" type="search" placeholder="Tìm phụ kiện..." aria-label="Tìm sản phẩm"></label>
+          </div>
+          <div v-if="danhSachLoc.length" class="product-grid">
+            <article v-for="product in danhSachLoc" :key="product.id" class="product-card">
+              <div class="product-image media-frame">
+                <span class="product-badge" :class="product.badgeClass">{{ product.badge }}</span>
+                <span class="media-placeholder">Thêm ảnh<br><code>{{ product.image }}</code></span>
+                <img :src="product.image" :alt="product.name" loading="lazy" @load="markImageLoaded($event)" @error="markImageMissing($event)">
+              </div>
+              <div class="product-details"><p class="product-category">{{ product.category }}</p><h3>{{ product.name }}</h3><p class="product-description">{{ product.description }}</p><div class="product-buy"><strong>{{ formatPrice(product.price) }}</strong><button type="button" class="add-button" @click="themVaoGio(product)" :aria-label="'Thêm ' + product.name + ' vào giỏ'">Thêm <span aria-hidden="true">＋</span></button></div></div>
+            </article>
+          </div>
+          <div v-else class="empty-search"><strong>Chưa tìm thấy món phù hợp.</strong><p>Thử một từ khoá khác nhé.</p></div>
+        </div>
+
+        <aside class="cart-panel" id="cart" aria-labelledby="cartHeading">
+          <div class="cart-title"><div><p class="eyebrow"><span></span> YOUR PICKS</p><h2 id="cartHeading">Giỏ hàng</h2></div><span class="cart-count cart-count-large">{{ cartCount }}</span></div>
+          <div v-if="cart.length === 0" class="empty-cart"><span class="empty-cart-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M7 10h5l5 23h21l5-17H15"/><circle cx="20" cy="40" r="2"/><circle cx="36" cy="40" r="2"/></svg></span><strong>Giỏ hàng đang trống</strong><p>Chọn một món bạn thích, BYTE giữ giúp bạn ở đây.</p><a href="#products">Xem sản phẩm <span>→</span></a></div>
+          <div v-else class="cart-items">
+            <article v-for="(item,index) in cart" :key="item.cartId" class="cart-item">
+              <div class="cart-item-image media-frame"><span class="media-placeholder">Ảnh</span><img :src="item.image" :alt="item.name" @load="markImageLoaded($event)" @error="markImageMissing($event)"></div>
+              <div class="cart-item-copy"><h3>{{ item.name }}</h3><strong>{{ formatPrice(item.price) }}</strong></div>
+              <button type="button" class="remove-button" @click="xoaKhoiGio(index)" :aria-label="'Xoá ' + item.name + ' khỏi giỏ'">×</button>
+            </article>
+            <div class="cart-total"><span>Tạm tính</span><strong>{{ formatPrice(tongTien) }}</strong></div>
+            <button type="button" class="checkout-button" @click="thongBaoThanhToan">Tiến hành đặt hàng <span>→</span></button>
+            <p v-if="orderMessage" class="order-message" role="status">{{ orderMessage }}</p>
+          </div>
+          <p class="cart-note">Thanh toán an toàn · Đổi trả trong 7 ngày</p>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="shop-footer" id="contact">
+      <div class="footer-main"><div><a class="shop-brand footer-brand" href="#home"><span class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M17.5 3 7 18h7l-1 11 12-17h-8z"/></svg></span><span>BYTE<small>TECH ACCESSORIES</small></span></a><p>Phụ kiện tốt giúp mỗi ngày kết nối nhẹ nhàng hơn.</p></div><div><h2>Hỗ trợ</h2><a href="#contact">Chính sách giao hàng</a><a href="#contact">Đổi trả & bảo hành</a></div><div><h2>Liên hệ</h2><p>hello@byte.store<br>0908 123 456<br>TP. Hồ Chí Minh</p></div><div><h2>Theo dõi BYTE</h2><a href="#contact">Instagram</a><a href="#contact">Facebook</a></div></div>
+      <div class="footer-bottom"><span>© 2026 BYTE Store</span><span>Designed for everyday connection.</span></div>
+    </footer>
+  </div>
+</body>
+</html>

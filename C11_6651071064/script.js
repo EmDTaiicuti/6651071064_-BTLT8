@@ -1,0 +1,2 @@
+'use strict';
+$('#fileInput').on('change',function(){const f=this.files[0],box=$('#fileResult');if(!f){box.text('Chưa có tệp nào được chọn.');return;}const dot=f.name.lastIndexOf('.');box.html('<strong>Tên file:</strong> '+escapeHtml(f.name)+'<br><strong>Phần mở rộng:</strong> '+(dot>0?escapeHtml(f.name.slice(dot+1)):'Không có'));});function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}

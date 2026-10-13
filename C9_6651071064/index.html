@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Các trường bắt buộc, email, ngày sinh và mã ZIP được kiểm tra khi hoàn tất.">
+  <title>Form đăng ký có kiểm tra · Câu 9</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <h1>Form đăng ký có kiểm tra</h1><p class="description">Các trường bắt buộc, email, ngày sinh và mã ZIP được kiểm tra khi hoàn tất.</p>
+    <form id="registrationForm" class="demo-card registration" novalidate><h2>Thông tin cá nhân</h2><p class="required-note"><span>*</span> Trường bắt buộc</p><div class="form-grid"><label>Họ và tên <b>*</b><input name="name" required autocomplete="name"></label><fieldset><legend>Giới tính <b>*</b></legend><label class="inline"><input type="radio" name="sex" value="Nam" required> Nam</label><label class="inline"><input type="radio" name="sex" value="Nữ"> Nữ</label></fieldset><label>Email <b>*</b><input name="email" type="email" required autocomplete="email"></label><label>Ngày sinh (MM/DD/YYYY) <b>*</b><input name="birthdate" placeholder="MM/DD/YYYY" required></label><label>Địa chỉ đường (dòng 1) <b>*</b><input name="street" required autocomplete="street-address"></label><label>Thành phố <b>*</b><input name="city" required autocomplete="address-level2"></label><label>Bang / Tỉnh <b>*</b><select name="region" required><option value="">Chọn tỉnh/thành</option><option>Hà Nội</option><option>TP. Hồ Chí Minh</option><option>Đà Nẵng</option><option>Cần Thơ</option><option>Khác</option></select></label><label>Mã ZIP (5 số) <b>*</b><input name="zip" inputmode="numeric" maxlength="5" placeholder="12345" required></label></div><div class="form-actions"><button class="button" type="submit">Finish</button><button class="button button-secondary" type="reset">Clear</button></div><p id="formMessage" class="form-message" aria-live="polite"></p></form>
+  </main>
+  <script>window.addEventListener('load', function(){if(!window.jQuery) document.body.insertAdjacentHTML('beforeend','<p style="position:fixed;bottom:0;background:#fff;color:#9c2c40;padding:8px">Không tải được jQuery CDN. Kiểm tra kết nối Internet.</p>');});</script>
+</body>
+</html>

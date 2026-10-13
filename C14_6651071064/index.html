@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Chuyển giữa khung cảnh buổi sáng và buổi tối bằng công tắc đèn.">
+  <title>Chuyển giao diện sáng / tối</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <h1>Chuyển giao diện sáng / tối</h1>
+    <p class="description">Gạt công tắc để đổi khung cảnh từ buổi sáng sang buổi tối.</p>
+    <section class="card theme-card" aria-labelledby="themeHeading">
+      <div class="row theme-controls">
+        <div>
+          <h2 id="themeHeading">Chế độ giao diện</h2>
+          <p class="hint">Sáng: Morning · Tối: Evening</p>
+        </div>
+        <label class="switch" for="themeToggle">
+          <span id="themeLabel">Sáng</span>
+          <input id="themeToggle" type="checkbox" checked aria-label="Bật chế độ buổi sáng">
+          <span class="slider" aria-hidden="true"></span>
+        </label>
+      </div>
+      <article class="theme-preview">
+        <div class="scene-stage" id="sceneStage" data-scene="morning">
+          <img id="sceneImage" src="images/Morning.png" alt="Khung cảnh buổi sáng">
+          <div class="scene-shade" aria-hidden="true"></div>
+          <div class="lamp-glow" aria-hidden="true"></div>
+          <span class="window-light light-one" aria-hidden="true"></span>
+          <span class="window-light light-two" aria-hidden="true"></span>
+          <span class="window-light light-three" aria-hidden="true"></span>
+          <span class="window-light light-four" aria-hidden="true"></span>
+        </div>
+        <div class="scene-caption">
+          <strong id="sceneTitle">Chào ngày mới</strong>
+          <p id="sceneDescription">Ánh sáng dịu nhẹ của buổi sáng.</p>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
